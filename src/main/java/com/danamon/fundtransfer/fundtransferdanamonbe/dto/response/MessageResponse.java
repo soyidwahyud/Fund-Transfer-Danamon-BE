@@ -1,10 +1,12 @@
 package com.danamon.fundtransfer.fundtransferdanamonbe.dto.response;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
 @AllArgsConstructor
 public class MessageResponse {
     private String message;

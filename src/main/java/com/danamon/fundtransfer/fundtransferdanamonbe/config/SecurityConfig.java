@@ -2,6 +2,8 @@ package com.danamon.fundtransfer.fundtransferdanamonbe.config;
 
 import com.danamon.fundtransfer.fundtransferdanamonbe.security.jwt.AuthEntryPointJwt;
 import com.danamon.fundtransfer.fundtransferdanamonbe.security.jwt.AuthTokenFilter;
+import com.danamon.fundtransfer.fundtransferdanamonbe.security.jwt.JwtAuthEntryPoint;
+import com.danamon.fundtransfer.fundtransferdanamonbe.security.jwt.JwtAuthenticationFilter;
 import com.danamon.fundtransfer.fundtransferdanamonbe.security.service.UserDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -31,54 +33,52 @@ public class SecurityConfig { // extends WebSecurityConfigurerAdapter {
     UserDetailServiceImpl userDetailsService;
 
     @Autowired
-    private AuthEntryPointJwt unauthorizedHandler;
-
+    private JwtAuthEntryPoint jwtAuthEntryPoint;
 
     @Bean
-    public static PasswordEncoder passwordEncoder() {
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
-        return configuration.getAuthenticationManager();
+    public JwtAuthenticationFilter jwtAuthenticationFilter() {
+        return new JwtAuthenticationFilter();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+        return authConfig.getAuthenticationManager();
+    }
+
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+
+        authProvider.setUserDetailsService(userDetailsService);
+        authProvider.setPasswordEncoder(passwordEncoder());
+
+        return authProvider;
     }
 
 
-
-//  @Override
-//  protected void configure(HttpSecurity http) throws Exception {
-//    http.cors().and().csrf().disable()
-//      .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-//      .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-//      .authorizeRequests().antMatchers("/api/auth/**").permitAll()
-//      .antMatchers("/api/test/**").permitAll()
-//      .anyRequest().authenticated();
-//
-//    http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-//  }
-
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http,
-                                           AuthenticationManager authenticationManager) throws Exception{
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http
                 .cors()
                 .and()
                 .csrf().disable()
 //                .authenticationManager(authenticationManager)
-//                .exceptionHandling()
-//                .authenticationEntryPoint(handler)
-//                .and()
+                .exceptionHandling()
+                .authenticationEntryPoint(jwtAuthEntryPoint)
+                .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
-                .antMatchers("api/v1/auth/**")
+                .antMatchers("/api/v1/auth/**")
                 .permitAll()
                 .anyRequest().authenticated();
 
-//        http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-//        http.authenticationProvider(authenticationProvider());
-//
-//        http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

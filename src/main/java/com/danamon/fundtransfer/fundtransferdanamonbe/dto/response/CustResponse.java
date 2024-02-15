@@ -1,18 +1,16 @@
 package com.danamon.fundtransfer.fundtransferdanamonbe.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-@Data
+@Getter
+@Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class CustResponse implements Serializable {
     private static final long serialVersionUID = 1L;
 

@@ -3,10 +3,12 @@ package com.danamon.fundtransfer.fundtransferdanamonbe.service.impl;
 import com.danamon.fundtransfer.fundtransferdanamonbe.dto.request.CustRequest;
 import com.danamon.fundtransfer.fundtransferdanamonbe.dto.request.SignInRequest;
 import com.danamon.fundtransfer.fundtransferdanamonbe.dto.response.JwTResponse;
+import com.danamon.fundtransfer.fundtransferdanamonbe.dto.response.LoginResponse;
 import com.danamon.fundtransfer.fundtransferdanamonbe.dto.response.MessageResponse;
 import com.danamon.fundtransfer.fundtransferdanamonbe.entity.Cust;
 import com.danamon.fundtransfer.fundtransferdanamonbe.mapper.CustMapper;
 import com.danamon.fundtransfer.fundtransferdanamonbe.repository.CustRepository;
+import com.danamon.fundtransfer.fundtransferdanamonbe.security.jwt.JwtGenerator;
 import com.danamon.fundtransfer.fundtransferdanamonbe.security.jwt.JwtUtils;
 import com.danamon.fundtransfer.fundtransferdanamonbe.security.service.UserDetailsImpl;
 import com.danamon.fundtransfer.fundtransferdanamonbe.service.CustService;
@@ -23,12 +25,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-@Slf4j
+@Transactional
 public class CustServiceImpl implements CustService{
     @Autowired
     private CustRepository custRepository;
@@ -36,10 +39,7 @@ public class CustServiceImpl implements CustService{
     @Autowired
     CustMapper custMapper;
 
-    @Value("${danamon.app.jwt-cookie-name}")
-    private String cookieName;
-
-//    @Autowired
+    @Autowired
     AuthenticationManager authenticationManager;
 
     @Autowired
@@ -47,6 +47,13 @@ public class CustServiceImpl implements CustService{
 
     @Autowired
     JwtUtils jwtUtils;
+
+    @Autowired
+    JwtGenerator jwtGenerator;
+
+    @Value("${danamon.app.jwt-cookie-name}")
+    private String cookieName;
+
 
 
     @Override
@@ -91,13 +98,18 @@ public class CustServiceImpl implements CustService{
     }
 
     @Override
-    public ResponseEntity<?> authenticateUser(SignInRequest request) {
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPasswd());
-
-        authenticationManager.authenticate(authenticationToken);
-        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-//        String jwtToken = jwtTokenProvider.generateJwtToken(auth);
-        return new ResponseEntity<>("User login successfully!...", HttpStatus.OK);
+    public ResponseEntity<LoginResponse> authenticateUser(SignInRequest request) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(request.getUsername(),request.getPasswd()));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String token = jwtGenerator.generateToken(authentication,"Cust");
+        LoginResponse response = new LoginResponse();
+        response.setSuccess(true);
+        response.setMessage("Login Successful");
+        response.setToken(token);
+        Cust cust = custRepository.findByUsername(request.getUsername()).orElseThrow();
+        response.setCustDetails(cust.getUsername(),cust.getId());
+        return new ResponseEntity<LoginResponse>(response, HttpStatus.OK);
     }
 
 }
