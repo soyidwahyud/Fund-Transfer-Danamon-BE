@@ -12,7 +12,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "tbl_acct")
+@Table(name = "tbl_acct",schema="danamon")
 @Builder(toBuilder = true)
 public class Acct {
     @Id

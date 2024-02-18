@@ -3,9 +3,6 @@ package com.danamon.fundtransfer.fundtransferdanamonbe.entity;
 
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -38,6 +35,11 @@ public class Cust {
     private Double status;
     @OneToMany(cascade = CascadeType.ALL)
     private Set<CustRel> custRelSet;
+
+    @OneToOne(fetch = FetchType.LAZY,
+            cascade =  CascadeType.ALL,
+            mappedBy = "cust")
+    private CustProfile custProfile;
 
 
 

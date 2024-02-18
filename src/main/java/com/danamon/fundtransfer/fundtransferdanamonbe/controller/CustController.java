@@ -2,6 +2,7 @@ package com.danamon.fundtransfer.fundtransferdanamonbe.controller;
 
 import com.danamon.fundtransfer.fundtransferdanamonbe.dto.request.CustRequest;
 import com.danamon.fundtransfer.fundtransferdanamonbe.dto.request.SignInRequest;
+import com.danamon.fundtransfer.fundtransferdanamonbe.dto.response.CustResponse;
 import com.danamon.fundtransfer.fundtransferdanamonbe.service.CustService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,16 +16,12 @@ public class CustController {
     @Autowired
     CustService custService;
 
-    @PostMapping("/auth/signup")
-    public ResponseEntity<?> registerCust(@Validated @RequestBody CustRequest custRequest){
+    @PostMapping("/add-cust")
+    public CustResponse registerCust(@Validated @RequestBody CustRequest custRequest){
         return custService.registerCust(custRequest);
     }
-    @PostMapping("/auth/signin")
-    public ResponseEntity<?> authenticateUser(@Validated @RequestBody SignInRequest request) {
-        return custService.authenticateUser(request);
-    }
-    @PostMapping("/auth/signout")
-    public ResponseEntity<?> signOutUser(){
-        return custService.signOutCust();
+    @PostMapping("/add-cust-profile")
+    public CustResponse addCustProfile(@Validated @RequestBody CustRequest custRequest){
+        return custService.registerCust(custRequest);
     }
 }

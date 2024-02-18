@@ -35,4 +35,7 @@ public class CustResponse implements Serializable {
     @JsonProperty("status")
     private Double status;
 
+    @JsonProperty("cust_profile")
+    private CustProfileResponse custProfileResponse;
+
 }

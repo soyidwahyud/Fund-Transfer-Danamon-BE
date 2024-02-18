@@ -4,14 +4,13 @@ import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.UUID;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "tbl_cust_profile")
+@Table(name = "tbl_cust_profile",schema="danamon")
 @Builder(toBuilder = true)
 public class CustProfile {
     @Id
@@ -32,8 +31,6 @@ public class CustProfile {
     private String shortName;
     @Column(name = "mobile_no")
     private String mobile_no;
-    @Column(name = "atm_cif_no")
-    private Integer atmCifNo;
     @Column(name = "status")
     private Double status;
 }

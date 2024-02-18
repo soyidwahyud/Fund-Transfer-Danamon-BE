@@ -20,5 +20,8 @@ public interface CustRepository extends JpaRepository<Cust, UUID> {
 
     Optional<Cust> findByUsername(String username);
 
+    @Query(value = "SELECT id FROM danamon.tbl_cust WHERE username = :username", nativeQuery = true)
+    Cust findIdByUsername(String username);
+
     Boolean existsByUsername(String username);
 }

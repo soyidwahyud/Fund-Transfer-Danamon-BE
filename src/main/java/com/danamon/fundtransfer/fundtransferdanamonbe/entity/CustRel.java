@@ -11,7 +11,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "tbl_cust_rel")
+@Table(name = "tbl_cust_rel",schema="danamon")
 @Builder(toBuilder = true)
 public class CustRel {
     @Id
