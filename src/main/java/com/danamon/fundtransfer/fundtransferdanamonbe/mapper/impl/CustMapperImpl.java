@@ -4,10 +4,14 @@ import com.danamon.fundtransfer.fundtransferdanamonbe.dto.request.CustProfileReq
 import com.danamon.fundtransfer.fundtransferdanamonbe.dto.request.CustRequest;
 import com.danamon.fundtransfer.fundtransferdanamonbe.dto.response.CustProfileResponse;
 import com.danamon.fundtransfer.fundtransferdanamonbe.dto.response.CustResponse;
+import com.danamon.fundtransfer.fundtransferdanamonbe.entity.Acct;
 import com.danamon.fundtransfer.fundtransferdanamonbe.entity.Cust;
 import com.danamon.fundtransfer.fundtransferdanamonbe.entity.Cust.CustBuilder;
 import com.danamon.fundtransfer.fundtransferdanamonbe.entity.CustProfile;
 import com.danamon.fundtransfer.fundtransferdanamonbe.entity.CustProfile.CustProfileBuilder;
+import com.danamon.fundtransfer.fundtransferdanamonbe.entity.CustRel.CustRelBuilder;
+import com.danamon.fundtransfer.fundtransferdanamonbe.entity.CustRel;
+import com.danamon.fundtransfer.fundtransferdanamonbe.entity.Acct.AcctBuilder;
 import com.danamon.fundtransfer.fundtransferdanamonbe.mapper.CustMapper;
 import com.danamon.fundtransfer.fundtransferdanamonbe.repository.CustProfileRepository;
 import com.danamon.fundtransfer.fundtransferdanamonbe.repository.CustRepository;
@@ -16,6 +20,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
+import java.util.Random;
 
 @Component
 public class CustMapperImpl implements CustMapper {
@@ -86,5 +91,29 @@ public class CustMapperImpl implements CustMapper {
         custProfileResponse.setStatus(custProfile.getStatus());
         response.setCustProfileResponse(custProfileResponse);
         return response;
+    }
+
+    @Override
+    public Acct requestAcct() {
+        AcctBuilder acctBuilder = Acct.builder();
+        acctBuilder.noAcct("00"+ getRandomNumberString());
+        return acctBuilder.build();
+    }
+
+    @Override
+    public CustRel requestCustRel(Cust cust, Acct acct) {
+        CustRelBuilder custRelBuilder = CustRel.builder();
+        custRelBuilder.cust(cust);
+        custRelBuilder.acct(acct);
+        return custRelBuilder.build();
+    }
+    public static String getRandomNumberString() {
+        // It will generate 6 digit random Number.
+        // from 0 to 999999
+        Random rnd = new Random();
+        int number = rnd.nextInt(999999);
+
+        // this will convert any number sequence into 6 character.
+        return String.format("%06d", number);
     }
 }

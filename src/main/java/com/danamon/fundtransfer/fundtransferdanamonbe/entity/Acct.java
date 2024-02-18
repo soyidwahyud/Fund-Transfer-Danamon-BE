@@ -4,6 +4,7 @@ import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Set;
 import java.util.UUID;
 
@@ -21,9 +22,11 @@ public class Acct {
     @Column(name = "id", length = 36, updatable = false, nullable = false)
     private String id;
     @Column(name = "no_acct")
-    private Integer noAcct;
+    private String  noAcct;
     @Column(name = "status")
     private Integer status;
+    @Column(name = "balance")
+    private BigDecimal balance;
     @OneToMany(cascade = CascadeType.ALL)
     private Set<CustRel> custRelSet;
 }
