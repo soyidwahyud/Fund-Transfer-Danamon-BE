@@ -1,8 +1,10 @@
 package com.danamon.fundtransfer.fundtransferdanamonbe.repository;
 
+import com.danamon.fundtransfer.fundtransferdanamonbe.dto.response.CustGetDataResponse;
 import com.danamon.fundtransfer.fundtransferdanamonbe.entity.Cust;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
@@ -24,4 +26,17 @@ public interface CustRepository extends JpaRepository<Cust, UUID> {
     Cust findIdByUsername(String username);
 
     Boolean existsByUsername(String username);
+
+
+//    @Query(nativeQuery = true,value = "select * from danamon.get_data_cust(:username)")
+    @Query(value = "select a.id,a.username,b.email,b.fullname,b.mobile_no,d.no_acct,a.atm_cif_no,a.visa_master_cif_no,cast(d.balance as varchar)" +
+            " from danamon.tbl_cust a" +
+            " inner join danamon.tbl_cust_profile b" +
+            " on b.cust_id = a.id" +
+            " inner join danamon.tbl_cust_rel c" +
+            " on c.cust_id = a.id" +
+            " inner join danamon.tbl_acct d" +
+            " on d.id = c.acct_id" +
+            " where a.username = :username", nativeQuery = true)
+    CustGetDataResponse findGetCustGetData(@Param("username")String username);
 }

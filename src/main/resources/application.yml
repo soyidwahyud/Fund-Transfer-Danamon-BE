@@ -19,3 +19,6 @@ danamon:
     jwt-secret: ======================Danamon=Secret===========================
     jwt-expiration-ms: 86400000
 
+server:
+  error:
+    include-message: always
