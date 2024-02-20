@@ -2,6 +2,7 @@ package com.danamon.fundtransfer.fundtransferdanamonbe.mapper;
 
 import com.danamon.fundtransfer.fundtransferdanamonbe.dto.request.CustProfileRequest;
 import com.danamon.fundtransfer.fundtransferdanamonbe.dto.request.CustRequest;
+import com.danamon.fundtransfer.fundtransferdanamonbe.dto.response.CustGetDataResponse;
 import com.danamon.fundtransfer.fundtransferdanamonbe.dto.response.CustResponse;
 import com.danamon.fundtransfer.fundtransferdanamonbe.entity.Acct;
 import com.danamon.fundtransfer.fundtransferdanamonbe.entity.Cust;
@@ -15,4 +16,6 @@ public interface CustMapper {
 
     Acct requestAcct();
     CustRel requestCustRel(Cust cust, Acct acct);
+
+    CustGetDataResponse responseGetDataCust(String username, Cust cust);
 }

@@ -21,10 +21,10 @@ public class FundTransferRequest {
     private String receiverName;
     @JsonProperty("transfer")
     private BigDecimal transfer;
-//    @JsonProperty("admin_fee")
-//    private BigDecimal adminFee;
     @JsonProperty("reason")
     private String reason;
     @JsonProperty("status")
     private Boolean status;
+    @JsonProperty("transaction_type")
+    private Integer transactionType;
 }

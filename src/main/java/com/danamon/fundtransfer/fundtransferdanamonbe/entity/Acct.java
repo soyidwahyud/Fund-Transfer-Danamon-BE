@@ -27,6 +27,8 @@ public class Acct {
     private Integer status;
     @Column(name = "balance")
     private BigDecimal balance;
+    @Column(name = "bank_flag")
+    private Integer bankFlag;
     @OneToMany(cascade = CascadeType.ALL)
     private Set<CustRel> custRelSet;
 }

@@ -40,4 +40,6 @@ public class FundTransfer {
     @Column(name = "status")
     @Builder.Default
     private Boolean status = true;
+    @Column(name = "transaction_type")
+    private Integer transactionType;
 }

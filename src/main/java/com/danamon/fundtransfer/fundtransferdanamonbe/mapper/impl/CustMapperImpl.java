@@ -2,6 +2,7 @@ package com.danamon.fundtransfer.fundtransferdanamonbe.mapper.impl;
 
 import com.danamon.fundtransfer.fundtransferdanamonbe.dto.request.CustProfileRequest;
 import com.danamon.fundtransfer.fundtransferdanamonbe.dto.request.CustRequest;
+import com.danamon.fundtransfer.fundtransferdanamonbe.dto.response.CustGetDataResponse;
 import com.danamon.fundtransfer.fundtransferdanamonbe.dto.response.CustProfileResponse;
 import com.danamon.fundtransfer.fundtransferdanamonbe.dto.response.CustResponse;
 import com.danamon.fundtransfer.fundtransferdanamonbe.entity.Acct;
@@ -15,7 +16,9 @@ import com.danamon.fundtransfer.fundtransferdanamonbe.entity.Acct.AcctBuilder;
 import com.danamon.fundtransfer.fundtransferdanamonbe.mapper.CustMapper;
 import com.danamon.fundtransfer.fundtransferdanamonbe.repository.CustProfileRepository;
 import com.danamon.fundtransfer.fundtransferdanamonbe.repository.CustRepository;
+import com.danamon.fundtransfer.fundtransferdanamonbe.repository.DataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -30,6 +33,7 @@ public class CustMapperImpl implements CustMapper {
 
     @Autowired
     private CustRepository custRepository;
+
 
     @Override
     public Cust requestCust(CustRequest request) {
@@ -107,6 +111,22 @@ public class CustMapperImpl implements CustMapper {
         custRelBuilder.acct(acct);
         return custRelBuilder.build();
     }
+
+    @Override
+    public CustGetDataResponse responseGetDataCust(String username, Cust cust) {
+        CustGetDataResponse dataResponse = custRepository.findGetCustGetData(username);
+        CustGetDataResponse response = new CustGetDataResponse();
+        response.setId(dataResponse.getId());
+        response.setUsername(dataResponse.getUsername());
+//        response.setEmail(custProfile.getEmail());
+//        response.setMobileNo(custProfile.getMobile_no());
+//        response.setNoAcct(acct.getNoAcct());
+//        response.setAtmCifNo(cust.getAtmCifNo());
+//        response.setVisaMasterCifNo(cust.getVisaMasterCifNo());
+//        response.setBalance(acct.getBalance());
+        return response;
+    }
+
     public static String getRandomNumberString() {
         // It will generate 6 digit random Number.
         // from 0 to 999999

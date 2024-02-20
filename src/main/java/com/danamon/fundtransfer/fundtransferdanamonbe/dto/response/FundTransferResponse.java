@@ -31,4 +31,6 @@ public class FundTransferResponse {
     private String reason;
     @JsonProperty("status")
     private Boolean status;
+    @JsonProperty("transaction_type")
+    private Integer transactionType;
 }
