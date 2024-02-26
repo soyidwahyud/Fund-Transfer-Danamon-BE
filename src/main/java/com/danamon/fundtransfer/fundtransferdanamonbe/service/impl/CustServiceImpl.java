@@ -18,11 +18,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -42,10 +45,17 @@ public class CustServiceImpl implements CustService{
     private CustRelRepository custRelRepository;
 
     @Autowired
+    private CustGetDataRepository custGetDataRepository;
+
+    @Autowired
     private IntegrationLogRepository integrationLogRepository;
 
     @Autowired
     CustMapper custMapper;
+
+    @Autowired
+    @PersistenceContext
+    EntityManager entityManager;
 
 
     @Value("${danamon.app.jwt-cookie-name}")
@@ -99,7 +109,8 @@ public class CustServiceImpl implements CustService{
     }
 
     @Override
-    public CustGetDataResponse dataResponse(HttpServletRequest requestServlet, HttpServletResponse response,String username, Cust cust, Acct acct, CustProfile custProfile) {
+    public List<CustGetDataResponse> dataResponse(HttpServletRequest requestServlet, HttpServletResponse response, String username) {
+        List<CustGetDataResponse> data = custGetDataRepository.getData(username);
 //        Optional<Cust> dataCust = custRepository.findByUsername(username);
 //        if (dataCust.isEmpty()) {
 //            throw new ResponseStatusException(
@@ -118,6 +129,6 @@ public class CustServiceImpl implements CustService{
 //                        .statusCode(response.getStatus())
 //                        .build()
 //        );
-        return custMapper.responseGetDataCust(username, cust,acct,custProfile);
+        return data;
     }
 }

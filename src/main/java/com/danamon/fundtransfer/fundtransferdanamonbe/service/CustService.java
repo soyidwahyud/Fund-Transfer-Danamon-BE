@@ -14,6 +14,6 @@ import java.util.List;
 
 public interface CustService {
     CustResponse registerCust(HttpServletRequest requestServlet, HttpServletResponse response,CustRequest request, CustResponse custResponse);
-    CustGetDataResponse dataResponse(HttpServletRequest requestServlet, HttpServletResponse response,String username, Cust cust, Acct acct, CustProfile custProfile);
+    List<CustGetDataResponse> dataResponse(HttpServletRequest requestServlet, HttpServletResponse response,String username);
 
 }

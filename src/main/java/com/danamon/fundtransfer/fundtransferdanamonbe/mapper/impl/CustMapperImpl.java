@@ -116,20 +116,20 @@ public class CustMapperImpl implements CustMapper {
         return custRelBuilder.build();
     }
 
-    @Override
-    public CustGetDataResponse responseGetDataCust(String username, Cust cust, Acct acct, CustProfile custProfile) {
-        CustGetDataResponse dataResponse = custGetDataRepository.findGetCustGetData(username);
-        CustGetDataResponse response = new CustGetDataResponse();
-        response.setId(dataResponse.getId());
-        response.setUsername(dataResponse.getUsername());
+//    @Override
+//    public ListCustGetDataResponse responseGetDataCust(String username, Cust cust, Acct acct, CustProfile custProfile) {
+//        CustGetDataResponse dataResponse = custGetDataRepository.findGetCustGetData(username);
+//        CustGetDataResponse response = new CustGetDataResponse();
+//        response.setId(dataResponse.getId());
+//        response.setUsername(dataResponse.getUsername());
 //        response.setEmail(custProfile.getEmail());
 //        response.setMobileNo(custProfile.getMobile_no());
 //        response.setNoAcct(acct.getNoAcct());
 //        response.setAtmCifNo(cust.getAtmCifNo());
 //        response.setVisaMasterCifNo(cust.getVisaMasterCifNo());
 //        response.setBalance(acct.getBalance());
-        return response;
-    }
+//        return response;
+//    }
 
     public static String getRandomNumberString() {
         // It will generate 6 digit random Number.

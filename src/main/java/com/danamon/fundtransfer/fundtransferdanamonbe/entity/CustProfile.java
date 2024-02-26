@@ -25,7 +25,7 @@ public class CustProfile {
     private String username;
     @Column(name = "email")
     private String email;
-    @Column(name = "fullname")
+    @Column(name = "full_name")
     private String fullname;
     @Column(name = "short_name")
     private String shortName;

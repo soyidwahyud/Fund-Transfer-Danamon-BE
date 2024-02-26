@@ -7,6 +7,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Repository
 public interface CustGetDataRepository extends JpaRepository<CustGetDataResponse, String> {
     @Transactional
@@ -21,4 +23,7 @@ public interface CustGetDataRepository extends JpaRepository<CustGetDataResponse
 //            " on d.id = c.acct_id" +
 //            " where a.username = :username", nativeQuery = true)
     CustGetDataResponse findGetCustGetData(@Param("username")String username);
+
+    @Query(nativeQuery = true,value = "select * from danamon.get_data_cust(:username)")
+    List<CustGetDataResponse> getData(@Param("username") String username);
 }

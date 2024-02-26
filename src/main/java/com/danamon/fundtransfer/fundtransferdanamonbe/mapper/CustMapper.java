@@ -9,6 +9,8 @@ import com.danamon.fundtransfer.fundtransferdanamonbe.entity.Cust;
 import com.danamon.fundtransfer.fundtransferdanamonbe.entity.CustProfile;
 import com.danamon.fundtransfer.fundtransferdanamonbe.entity.CustRel;
 
+import java.util.List;
+
 public interface CustMapper {
     Cust requestCust(CustRequest request);
     CustProfile requestCustProfile(CustProfileRequest request);
@@ -17,5 +19,5 @@ public interface CustMapper {
     Acct requestAcct();
     CustRel requestCustRel(Cust cust, Acct acct);
 
-    CustGetDataResponse responseGetDataCust(String username, Cust cust, Acct acct, CustProfile custProfile);
+//    List<CustGetDataResponse> responseGetDataCust(String username, Cust cust, Acct acct, CustProfile custProfile);
 }

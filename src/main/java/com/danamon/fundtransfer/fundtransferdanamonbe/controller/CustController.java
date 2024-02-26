@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -28,7 +29,7 @@ public class CustController {
         return custService.registerCust(requestServlet,response,custRequest,custResponse);
     }
     @PostMapping("/get-data-cust")
-    public CustGetDataResponse dataResponse(HttpServletRequest requestServlet, HttpServletResponse response,@RequestParam(value = "username") String username,Cust cust, Acct acct, CustProfile custProfile){
-        return custService.dataResponse(requestServlet,response,username,cust,acct,custProfile);
+    public List<CustGetDataResponse> dataResponse(HttpServletRequest requestServlet, HttpServletResponse response, @RequestParam(value = "username") String username){
+        return custService.dataResponse(requestServlet,response,username);
     }
 }
