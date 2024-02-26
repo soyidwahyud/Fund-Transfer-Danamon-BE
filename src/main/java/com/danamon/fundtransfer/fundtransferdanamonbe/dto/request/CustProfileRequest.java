@@ -25,4 +25,18 @@ public class CustProfileRequest {
     private String atmCifNo;
     @JsonProperty("status")
     private Double status;
+
+    @Override
+    public String toString() {
+        return "{" +
+                "custId='" + custId + '\'' +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", fullname='" + fullname + '\'' +
+                ", shortName='" + shortName + '\'' +
+                ", mobileNo='" + mobileNo + '\'' +
+                ", atmCifNo='" + atmCifNo + '\'' +
+                ", status=" + status +
+                '}';
+    }
 }

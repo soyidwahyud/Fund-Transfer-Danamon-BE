@@ -6,11 +6,9 @@ import com.danamon.fundtransfer.fundtransferdanamonbe.dto.response.CustResponse;
 import com.danamon.fundtransfer.fundtransferdanamonbe.entity.Acct;
 import com.danamon.fundtransfer.fundtransferdanamonbe.entity.Cust;
 import com.danamon.fundtransfer.fundtransferdanamonbe.entity.CustProfile;
+import com.danamon.fundtransfer.fundtransferdanamonbe.entity.IntegrationLog;
 import com.danamon.fundtransfer.fundtransferdanamonbe.mapper.CustMapper;
-import com.danamon.fundtransfer.fundtransferdanamonbe.repository.AcctRepository;
-import com.danamon.fundtransfer.fundtransferdanamonbe.repository.CustProfileRepository;
-import com.danamon.fundtransfer.fundtransferdanamonbe.repository.CustRelRepository;
-import com.danamon.fundtransfer.fundtransferdanamonbe.repository.CustRepository;
+import com.danamon.fundtransfer.fundtransferdanamonbe.repository.*;
 import com.danamon.fundtransfer.fundtransferdanamonbe.service.CustService;
 import com.google.common.hash.Hashing;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +18,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
+import java.util.Date;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -40,6 +42,9 @@ public class CustServiceImpl implements CustService{
     private CustRelRepository custRelRepository;
 
     @Autowired
+    private IntegrationLogRepository integrationLogRepository;
+
+    @Autowired
     CustMapper custMapper;
 
 
@@ -49,7 +54,7 @@ public class CustServiceImpl implements CustService{
 
 
     @Override
-    public CustResponse registerCust(CustRequest request) {
+    public CustResponse registerCust(HttpServletRequest requestServlet, HttpServletResponse response, CustRequest request,CustResponse custResponse) {
 
         String hashed = Hashing.sha256()
                 .hashString(request.getPasswd(), StandardCharsets.UTF_8)
@@ -75,16 +80,44 @@ public class CustServiceImpl implements CustService{
         acctRepository.save(acct);
         custRelRepository.save(custRel);
 
+        integrationLogRepository.save(
+                IntegrationLog.builder()
+                        .correlationId(UUID.randomUUID().toString())
+                        .activity(Thread.currentThread().getStackTrace()[1].getMethodName())
+                        .connectString(requestServlet.getRequestURL().toString())
+                        .createdBy(request.getUsername())
+                        .createdTime(new Date(new Date().getTime() + (7 * 60 * 60 * 1000)))
+                        .requestJson(request.toString())
+                        .responseJson(custMapper.responseCust(result,resultCustProfile).toString())
+                        .requestMethod(requestServlet.getMethod())
+                        .responseTime(System.currentTimeMillis())
+                        .statusCode(response.getStatus())
+                        .build()
+        );
+
         return custMapper.responseCust(result, resultCustProfile);
     }
 
     @Override
-    public CustGetDataResponse dataResponse(String username, Cust cust) {
+    public CustGetDataResponse dataResponse(HttpServletRequest requestServlet, HttpServletResponse response,String username, Cust cust, Acct acct, CustProfile custProfile) {
 //        Optional<Cust> dataCust = custRepository.findByUsername(username);
 //        if (dataCust.isEmpty()) {
 //            throw new ResponseStatusException(
 //                    HttpStatus.NOT_FOUND, "Data Not Found");
 //        }
-        return custMapper.responseGetDataCust(username, cust);
+//        integrationLogRepository.save(
+//                IntegrationLog.builder()
+//                        .activity(Thread.currentThread().getStackTrace()[1].getMethodName())
+//                        .connectString(requestServlet.getRequestURL().toString())
+//                        .createdBy(request.getUsername())
+//                        .createdTime(new Date(new Date().getTime() + (7 * 60 * 60 * 1000)))
+//                        .requestJson(request.toString())
+//                        .responseJson(custResponse.toString())
+//                        .requestMethod(requestServlet.getMethod())
+//                        .responseTime(System.currentTimeMillis())
+//                        .statusCode(response.getStatus())
+//                        .build()
+//        );
+        return custMapper.responseGetDataCust(username, cust,acct,custProfile);
     }
 }

@@ -28,7 +28,8 @@ public class Acct {
     @Column(name = "balance")
     private BigDecimal balance;
     @Column(name = "bank_flag")
-    private Integer bankFlag;
+    @Builder.Default
+    private Integer bankFlag = 1;
     @OneToMany(cascade = CascadeType.ALL)
     private Set<CustRel> custRelSet;
 }

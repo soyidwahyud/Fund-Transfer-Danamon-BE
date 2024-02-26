@@ -8,10 +8,12 @@ import com.danamon.fundtransfer.fundtransferdanamonbe.entity.Cust;
 import com.danamon.fundtransfer.fundtransferdanamonbe.entity.CustProfile;
 
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public interface CustService {
-    CustResponse registerCust(CustRequest request);
-    CustGetDataResponse dataResponse(String username, Cust cust);
+    CustResponse registerCust(HttpServletRequest requestServlet, HttpServletResponse response,CustRequest request, CustResponse custResponse);
+    CustGetDataResponse dataResponse(HttpServletRequest requestServlet, HttpServletResponse response,String username, Cust cust, Acct acct, CustProfile custProfile);
 
 }

@@ -13,6 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 @RestController
 @RequestMapping("/api/v1")
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -21,16 +24,11 @@ public class CustController {
     CustService custService;
 
     @PostMapping("/add-cust")
-    public CustResponse registerCust(@Validated @RequestBody CustRequest custRequest){
-        return custService.registerCust(custRequest);
+    public CustResponse registerCust(HttpServletRequest requestServlet, HttpServletResponse response, @Validated @RequestBody CustRequest custRequest, CustResponse custResponse){
+        return custService.registerCust(requestServlet,response,custRequest,custResponse);
     }
     @PostMapping("/get-data-cust")
-    public CustGetDataResponse dataResponse(@RequestParam(value = "username") String username){
-        Cust cust = new Cust();
-        return custService.dataResponse(username,cust);
-    }
-    @GetMapping("/hello")
-    public String sayHello(@RequestParam(value = "myName", defaultValue = "World") String name) {
-        return String.format("Hello %s!", name);
+    public CustGetDataResponse dataResponse(HttpServletRequest requestServlet, HttpServletResponse response,@RequestParam(value = "username") String username,Cust cust, Acct acct, CustProfile custProfile){
+        return custService.dataResponse(requestServlet,response,username,cust,acct,custProfile);
     }
 }

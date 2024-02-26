@@ -27,4 +27,18 @@ public class FundTransferRequest {
     private Boolean status;
     @JsonProperty("transaction_type")
     private Integer transactionType;
+
+    @Override
+    public String toString() {
+        return "{" +
+                "acctSender='" + acctSender + '\'' +
+                ", senderName='" + senderName + '\'' +
+                ", acctReceiver='" + acctReceiver + '\'' +
+                ", receiverName='" + receiverName + '\'' +
+                ", transfer=" + transfer +
+                ", reason='" + reason + '\'' +
+                ", status=" + status +
+                ", transactionType=" + transactionType +
+                '}';
+    }
 }

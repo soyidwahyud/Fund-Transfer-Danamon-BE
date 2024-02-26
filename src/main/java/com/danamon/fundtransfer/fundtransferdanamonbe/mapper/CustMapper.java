@@ -17,5 +17,5 @@ public interface CustMapper {
     Acct requestAcct();
     CustRel requestCustRel(Cust cust, Acct acct);
 
-    CustGetDataResponse responseGetDataCust(String username, Cust cust);
+    CustGetDataResponse responseGetDataCust(String username, Cust cust, Acct acct, CustProfile custProfile);
 }

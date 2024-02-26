@@ -34,4 +34,16 @@ public class CustRequest {
 
     private Set<String> role;
 
+    @Override
+    public String toString() {
+        return "{" +
+                "username='" + username + '\'' +
+                ", passwd='" + passwd + '\'' +
+                ", atmCifNo='" + atmCifNo + '\'' +
+                ", visaMasterCifNo='" + visaMasterCifNo + '\'' +
+                ", registrationType=" + registrationType +
+                ", status=" + status +
+                ", custProfileRequest=" + custProfileRequest.toString() +
+                '}';
+    }
 }

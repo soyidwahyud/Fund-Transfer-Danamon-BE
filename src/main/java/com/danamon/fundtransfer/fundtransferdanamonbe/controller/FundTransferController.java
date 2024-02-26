@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
@@ -17,8 +19,8 @@ public class FundTransferController {
     private FundTransferService service;
 
     @PostMapping("/fund-transfer")
-    public FundTransferResponse requestFundTransfer(@Validated @RequestBody FundTransferRequest request){
-        return service.requestFundTransfer(request);
+    public FundTransferResponse requestFundTransfer(HttpServletRequest requestServlet, HttpServletResponse response, @Validated @RequestBody FundTransferRequest request){
+        return service.requestFundTransfer(requestServlet,response,request);
     }
     @PostMapping("/get-data-fund-transfer")
     public List<FundTransferResponse> findAll(){

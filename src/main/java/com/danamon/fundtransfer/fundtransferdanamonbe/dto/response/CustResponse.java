@@ -38,4 +38,17 @@ public class CustResponse implements Serializable {
     @JsonProperty("cust_profile")
     private CustProfileResponse custProfileResponse;
 
+    @Override
+    public String toString() {
+        return "{" +
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", passwd='" + passwd + '\'' +
+                ", atmCifNo='" + atmCifNo + '\'' +
+                ", visaMasterCifNo='" + visaMasterCifNo + '\'' +
+                ", registrationType=" + registrationType +
+                ", status=" + status +
+                ", custProfileResponse=" + custProfileResponse.toString() +
+                '}';
+    }
 }

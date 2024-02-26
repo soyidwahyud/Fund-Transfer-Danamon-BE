@@ -33,4 +33,21 @@ public class FundTransferResponse {
     private Boolean status;
     @JsonProperty("transaction_type")
     private Integer transactionType;
+
+    @Override
+    public String toString() {
+        return "{" +
+                "id='" + id + '\'' +
+                ", acctSender='" + acctSender + '\'' +
+                ", senderName='" + senderName + '\'' +
+                ", acctReceiver='" + acctReceiver + '\'' +
+                ", receiverName='" + receiverName + '\'' +
+                ", transfer=" + transfer +
+                ", adminFee=" + adminFee +
+                ", total=" + total +
+                ", reason='" + reason + '\'' +
+                ", status=" + status +
+                ", transactionType=" + transactionType +
+                '}';
+    }
 }

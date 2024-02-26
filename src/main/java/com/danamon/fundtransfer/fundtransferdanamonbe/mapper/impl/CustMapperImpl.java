@@ -14,6 +14,7 @@ import com.danamon.fundtransfer.fundtransferdanamonbe.entity.CustRel.CustRelBuil
 import com.danamon.fundtransfer.fundtransferdanamonbe.entity.CustRel;
 import com.danamon.fundtransfer.fundtransferdanamonbe.entity.Acct.AcctBuilder;
 import com.danamon.fundtransfer.fundtransferdanamonbe.mapper.CustMapper;
+import com.danamon.fundtransfer.fundtransferdanamonbe.repository.CustGetDataRepository;
 import com.danamon.fundtransfer.fundtransferdanamonbe.repository.CustProfileRepository;
 import com.danamon.fundtransfer.fundtransferdanamonbe.repository.CustRepository;
 import com.danamon.fundtransfer.fundtransferdanamonbe.repository.DataRepository;
@@ -33,6 +34,9 @@ public class CustMapperImpl implements CustMapper {
 
     @Autowired
     private CustRepository custRepository;
+
+    @Autowired
+    private CustGetDataRepository custGetDataRepository;
 
 
     @Override
@@ -113,8 +117,8 @@ public class CustMapperImpl implements CustMapper {
     }
 
     @Override
-    public CustGetDataResponse responseGetDataCust(String username, Cust cust) {
-        CustGetDataResponse dataResponse = custRepository.findGetCustGetData(username);
+    public CustGetDataResponse responseGetDataCust(String username, Cust cust, Acct acct, CustProfile custProfile) {
+        CustGetDataResponse dataResponse = custGetDataRepository.findGetCustGetData(username);
         CustGetDataResponse response = new CustGetDataResponse();
         response.setId(dataResponse.getId());
         response.setUsername(dataResponse.getUsername());

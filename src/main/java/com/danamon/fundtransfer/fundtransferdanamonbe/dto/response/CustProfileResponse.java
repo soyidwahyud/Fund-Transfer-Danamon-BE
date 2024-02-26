@@ -25,4 +25,18 @@ public class CustProfileResponse {
     private String mobileNo;
     @JsonProperty("status")
     private Double status;
+
+    @Override
+    public String toString() {
+        return "{" +
+                "id='" + id + '\'' +
+                ", custId='" + custId + '\'' +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", shortName='" + shortName + '\'' +
+                ", mobileNo='" + mobileNo + '\'' +
+                ", status=" + status +
+                '}';
+    }
 }
