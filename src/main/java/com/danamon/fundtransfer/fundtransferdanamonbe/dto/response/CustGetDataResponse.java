@@ -35,4 +35,19 @@ public class CustGetDataResponse {
     private String visaMasterCifNo;
     @JsonProperty("balance")
     private String balance;
+
+    @Override
+    public String toString() {
+        return "{" +
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", email='" + email + '\'' +
+                ", mobileNo='" + mobileNo + '\'' +
+                ", noAcct='" + noAcct + '\'' +
+                ", atmCifNo='" + atmCifNo + '\'' +
+                ", visaMasterCifNo='" + visaMasterCifNo + '\'' +
+                ", balance='" + balance + '\'' +
+                '}';
+    }
 }

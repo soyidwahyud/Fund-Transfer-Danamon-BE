@@ -111,24 +111,20 @@ public class CustServiceImpl implements CustService{
     @Override
     public List<CustGetDataResponse> dataResponse(HttpServletRequest requestServlet, HttpServletResponse response, String username) {
         List<CustGetDataResponse> data = custGetDataRepository.getData(username);
-//        Optional<Cust> dataCust = custRepository.findByUsername(username);
-//        if (dataCust.isEmpty()) {
-//            throw new ResponseStatusException(
-//                    HttpStatus.NOT_FOUND, "Data Not Found");
-//        }
-//        integrationLogRepository.save(
-//                IntegrationLog.builder()
-//                        .activity(Thread.currentThread().getStackTrace()[1].getMethodName())
-//                        .connectString(requestServlet.getRequestURL().toString())
-//                        .createdBy(request.getUsername())
-//                        .createdTime(new Date(new Date().getTime() + (7 * 60 * 60 * 1000)))
-//                        .requestJson(request.toString())
-//                        .responseJson(custResponse.toString())
-//                        .requestMethod(requestServlet.getMethod())
-//                        .responseTime(System.currentTimeMillis())
-//                        .statusCode(response.getStatus())
-//                        .build()
-//        );
+        integrationLogRepository.save(
+                IntegrationLog.builder()
+                        .correlationId(UUID.randomUUID().toString())
+                        .activity(Thread.currentThread().getStackTrace()[1].getMethodName())
+                        .connectString(requestServlet.getRequestURL().toString())
+                        .createdBy(data.get(0).getUsername())
+                        .createdTime(new Date(new Date().getTime() + (7 * 60 * 60 * 1000)))
+                        .requestJson(requestServlet.getRequestURL().toString() + "?username=" + data.get(0).getUsername())
+                        .responseJson(data.toString())
+                        .requestMethod(requestServlet.getMethod())
+                        .responseTime(System.currentTimeMillis())
+                        .statusCode(response.getStatus())
+                        .build()
+        );
         return data;
     }
 }

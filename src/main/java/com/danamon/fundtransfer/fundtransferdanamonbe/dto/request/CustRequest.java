@@ -2,8 +2,8 @@ package com.danamon.fundtransfer.fundtransferdanamonbe.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sun.istack.NotNull;
 import lombok.*;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -11,28 +11,32 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CustRequest {
+    @NotNull
     @JsonProperty("username")
     private String username;
 
+    @NotNull
     @JsonProperty("passwd")
     private String passwd;
 
+    @NotNull
     @JsonProperty("atm_cif_no")
     private String atmCifNo;
 
+    @NotNull
     @JsonProperty("visa_master_cif_no")
     private String visaMasterCifNo;
 
     @JsonIgnore()
     private Integer registrationType;
 
+    @NotNull
     @JsonProperty("status")
     private Double status;
 
+    @NotNull
     @JsonProperty("cust_profile")
     private CustProfileRequest custProfileRequest;
-
-    private Set<String> role;
 
     @Override
     public String toString() {
