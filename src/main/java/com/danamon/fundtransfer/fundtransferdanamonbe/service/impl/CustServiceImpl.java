@@ -13,6 +13,8 @@ import com.danamon.fundtransfer.fundtransferdanamonbe.service.CustService;
 import com.google.common.hash.Hashing;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -64,6 +66,7 @@ public class CustServiceImpl implements CustService{
 
 
     @Override
+    @CachePut(value="custServiceImpl",key = "#id", condition = "#result != null ")
     public CustResponse registerCust(HttpServletRequest requestServlet, HttpServletResponse response, CustRequest request,CustResponse custResponse) {
 
         String hashed = Hashing.sha256()
@@ -109,6 +112,7 @@ public class CustServiceImpl implements CustService{
     }
 
     @Override
+    @Cacheable("custCache")
     public List<CustGetDataResponse> dataResponse(HttpServletRequest requestServlet, HttpServletResponse response, String username) {
         List<CustGetDataResponse> data = custGetDataRepository.getData(username);
         integrationLogRepository.save(

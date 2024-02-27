@@ -9,6 +9,8 @@ import com.danamon.fundtransfer.fundtransferdanamonbe.repository.IntegrationLogR
 import com.danamon.fundtransfer.fundtransferdanamonbe.service.FundTransferService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,6 +34,7 @@ public class FundTransferServiceImpl implements FundTransferService {
     private FundTransferMapper mapper;
 
     @Override
+    @CachePut(value="fundTransferImpl",key = "#id", condition = "#result != null ")
     public FundTransferResponse requestFundTransfer(HttpServletRequest requestServlet, HttpServletResponse response, FundTransferRequest request) {
         var fundTransfer = mapper.requestFundTransfer(request);
         var result = repository.save(fundTransfer);
@@ -55,6 +58,7 @@ public class FundTransferServiceImpl implements FundTransferService {
     }
 
     @Override
+    @Cacheable("fundTransferCache")
     public List<FundTransferResponse> findAll() {
         var listFundTransfer = repository.findAll();
         return listFundTransfer.stream().map(mapper::responseFundTransfer).collect(Collectors.toList());

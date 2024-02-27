@@ -91,6 +91,7 @@ public class FundTransferMapperImpl implements FundTransferMapper {
         }
         response.setReason(fundTransfer.getReason());
         response.setStatus(fundTransfer.getStatus());
+        response.setTransactionType(fundTransfer.getTransactionType());
         return response;
     }
 }

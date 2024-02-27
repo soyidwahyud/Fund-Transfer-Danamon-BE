@@ -15,6 +15,9 @@ spring:
   mvc:
     async:
       request-timeout: 5000
+  redis:
+    host: 127.0.0.1
+    port: 6379
 
 danamon:
   app:
@@ -25,3 +28,8 @@ danamon:
 server:
   error:
     include-message: always
+
+setting:
+  cache:
+    redis:
+      time-to-live: 5
