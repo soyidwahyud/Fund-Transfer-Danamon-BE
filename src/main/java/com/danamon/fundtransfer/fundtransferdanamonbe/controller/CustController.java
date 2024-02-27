@@ -10,6 +10,7 @@ import com.danamon.fundtransfer.fundtransferdanamonbe.entity.CustProfile;
 import com.danamon.fundtransfer.fundtransferdanamonbe.service.CustService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,10 +26,12 @@ public class CustController {
     CustService custService;
 
     @PostMapping("/add-cust")
+    @Transactional(timeout = 120)
     public CustResponse registerCust(HttpServletRequest requestServlet, HttpServletResponse response, @Validated @RequestBody CustRequest custRequest, CustResponse custResponse){
         return custService.registerCust(requestServlet,response,custRequest,custResponse);
     }
     @PostMapping("/get-data-cust")
+    @Transactional(timeout = 120)
     public List<CustGetDataResponse> dataResponse(HttpServletRequest requestServlet, HttpServletResponse response, @RequestParam(value = "username") String username){
         return custService.dataResponse(requestServlet,response,username);
     }

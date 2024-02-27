@@ -1,0 +1,124 @@
+{
+	"info": {
+		"_postman_id": "c6f33fd9-8bcf-4592-af63-129e9a7060e2",
+		"name": "Danamon-BE",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "add-cust",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"ervaniyulia\",\r\n    \"passwd\":\"password\",\r\n    \"atm_cif_no\":\"56232532783\",\r\n    \"status\":138,\r\n    \"cust_profile\":{\r\n        \"username\":\"ervaniyulia\",\r\n        \"email\":\"ervaniyulia@gmail.com\",\r\n        \"fullname\":\"ervani yulia\",\r\n        \"short_name\":\"ervani\",\r\n        \"mobile_no\":\"083895193047\",\r\n        \"status\":138\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/add-cust",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"add-cust"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "fund-transfer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"acct_sender\":\"00097014\",\r\n    \"sender_name\":\"wahyudarma\",\r\n    \"acct_receiver\":\"00609345\",\r\n    \"receiver_name\":\"wahyudarma\",\r\n    \"transfer\":100000,\r\n    \"reason\":\"Success\",\r\n    \"status\":true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/fund-transfer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"fund-transfer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-data-fund-transfer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/get-data-fund-transfer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"get-data-fund-transfer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-data-cust",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/get-data-cust?username=ervaniyulia",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"get-data-cust"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "ervaniyulia"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

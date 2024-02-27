@@ -4,6 +4,7 @@ import com.danamon.fundtransfer.fundtransferdanamonbe.dto.request.FundTransferRe
 import com.danamon.fundtransfer.fundtransferdanamonbe.dto.response.FundTransferResponse;
 import com.danamon.fundtransfer.fundtransferdanamonbe.service.FundTransferService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,10 +20,12 @@ public class FundTransferController {
     private FundTransferService service;
 
     @PostMapping("/fund-transfer")
+    @Transactional(timeout = 120)
     public FundTransferResponse requestFundTransfer(HttpServletRequest requestServlet, HttpServletResponse response, @Validated @RequestBody FundTransferRequest request){
         return service.requestFundTransfer(requestServlet,response,request);
     }
     @PostMapping("/get-data-fund-transfer")
+    @Transactional(timeout = 120)
     public List<FundTransferResponse> findAll(){
         return service.findAll();
     }

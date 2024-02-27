@@ -12,6 +12,9 @@ spring:
     schemas: danamon
     enabled: true
     clean-disabled: true
+  mvc:
+    async:
+      request-timeout: 5000
 
 danamon:
   app:
