@@ -6,9 +6,9 @@ Stack yang digunakan :
 3. swagger UI
 4. Flyway migration
 5. message queue (soon)
-6. redis (on develop)
+6. redis 
 7. Logging
-8. unit test (on develop)
+8. unit test 
 9. docker (soon)
 
 Tabel pada Postgresql : 
