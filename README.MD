@@ -4,11 +4,12 @@ Stack yang digunakan :
 1. Java (version 18)
 2. Postgresql
 3. swagger UI
-4. message queue (soon)
-5. redis (on develop)
-6. Logging
-7. unit test (on develop)
-8. docker (soon)
+4. Flyway migration
+5. message queue (soon)
+6. redis (on develop)
+7. Logging
+8. unit test (on develop)
+9. docker (soon)
 
 Tabel pada Postgresql : 
 1. tbl_cust
